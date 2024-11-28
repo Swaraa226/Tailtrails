@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Map</title>
+      <!-- Leaflet CSS -->
+      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+      <!-- Leaflet JS -->
+      <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
+    <style>
+ .header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+            background-color: #f8f9fa;
+        }
+        .top-row {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .back-icon 
+            .back-icon {
+        text-align: left;
+    }
+    .back-icon img {
+        width: 30px;
+        height: 30px;
+    }
+        .notification {
+            position: relative;
+            cursor: pointer;
+        }
+      
+        .search-bar {
+            width: 90%;
+            position: relative;
+            margin-top: 10px;
+            margin-bottom: 45px;
+            font-size: 32px;
+        }
+        .search-bar input {
+            width: calc(100% - 20px);
+            padding: 8px 12px;
+            border: 1px solid #000000;
+            border-radius: 10px;
+        }
+        .search-bar input::placeholder {
+            color: #333;
+        }
+
+
+            .call-btn {
+            margin-right: 10px;
+            display: inline-block;
+            width: 300px;
+            height: 100px;
+            padding: 1.3rem;
+            background-color: #ffdc00;
+            text-align: center;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 1000;
+            font-size: 40px;
+            color: #000000;
+  
+        }
+    
+        .grey-2 {
+    position: fixed; /* Fix the bar in place */
+    bottom: 0; /* Align it to the bottom of the viewport */
+    left: 0; /* Align it to the left edge */
+    width: 100%; /* Ensure it spans the full width */
+    height: 100px; /* Keep its height */
+    background-color: rgb(202, 200, 200); /* Background color */
+    border: 1px solid #333; /* Border */
+    border-radius: 0; /* Remove border radius to match bottom alignment */
+    display: flex; /* Flexbox for alignment */
+    align-items: center; /* Vertically center the content */
+    justify-content: space-around; /* Space evenly between images */
+    padding: 0 20px; /* Padding */
+    z-index: 9999; /* High z-index to ensure it appears above other elements */
+}
+.grey-2 img {
+    width: 75px; /* Width of the images */
+    height: 75px; /* Height of the images */
+    border-radius: 10px; /* Optional: rounded corners */
+    object-fit: cover; /* Ensures images are well-fitted */
+    cursor: pointer; /* Changes cursor to pointer */
+    transition: transform 0.3s ease; /* Smooth hover effect */
+}
+
+.grey-2 img:hover {
+    transform: scale(1.1); /* Slight zoom effect on hover */
+}
+#map {
+            height: 70vh;
+            width: 100%;
+        }
+    </style>
+</head>
+<body style="font-family: Arial, sans-serif;">
+
+        <!-- Back Icon and Heading -->
+        <div class="header">
+            <div class="top-row" style="padding: 50px;">
+                <button class="back-button" onclick="history.back()">&#8592;</button>
+                <img class="notification" src="/img/images (1).png" alt="notifications">
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="By zip code, state, or city">
+                
+            </div>
+            <div id="map"></div>
+
+        </div>
+       
+       <div class="container-fluid" style="background-color: white; position:absolute; bottom: 80px; height: fit-content; z-index: 1000; padding: 80px;">
+
+                <div class=" d-flex align-items-center">
+                    <div class="flex-grow-1">
+                        <h1 style="font-size: 80px;"><b>Peta India</b></h1>
+                        <p style="width: 80%; font-size: 40px;">Andheri West (Mumbai, Maharashtra)<br> 5 min (1 km)</p>
+                        <p style="font-size:  40px; font-weight: bold;"> 8617288849 </p>
+                    </div>
+                   
+                    <a href=" tel:8617288849" class="btn call-btn">CALL</a>
+                </div>
+
+</div>
+ <!-- Bootstrap JS -->
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+ <!-- Custom JS -->
+ <script>
+       
+ </script>
+<!---bottom bar-->
+<div class="grey-2">
+    <img src="/img/images (1).png" alt="Icon 1">
+    <img src="/img/images (1).png" alt="Icon 2">
+    <img src="/img/images (1).png" alt="Icon 3">
+    <img src="/img/images (1).png" alt="Icon 4">
+    <img src="/img/images (1).png" alt="Icon 5">
+</div>
+
+<script>
+    // Initialize the map
+    const map = L.map('map').setView([19.1197, 72.8467], 12); // Centered on Andheri West
+
+    // Add OpenStreetMap tiles
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Marker data with new locations
+    const markers = [
+        {
+            coords: [19.1197, 72.8467], // Andheri West
+            name: "Peta India",
+            address: "Andheri West, Mumbai, Maharashtra",
+            time: "5 min (1 km)",
+            weather: "Sunny ☀️",
+            phone: "8617288849",
+        },
+        {
+            coords: [19.0176, 72.8471], // Helping Hands Animal Welfare Foundation
+            name: "Helping Hands Animal Welfare Foundation",
+            address: "Mumbai, Maharashtra",
+            time: "15 min (5 km)",
+            weather: "Cloudy ☁️",
+            phone: "9876543210",
+        },
+        {
+            coords: [19.2579, 72.8682], // Animal Matter To Me (AMTM)
+            name: "Animal Matter To Me (AMTM) - Animal Hospital",
+            address: "Malad West, Mumbai, Maharashtra",
+            time: "25 min (12 km)",
+            weather: "Sunny ☀️",
+            phone: "9123456789",
+        },
+    ];
+
+    // Reference to the details section
+    const details = document.querySelector('.details');
+
+    // Function to update details section
+    function updateDetails(marker) {
+        details.querySelector('.left').innerHTML = `<strong>${marker.name}</strong><br>${marker.address}`;
+        details.querySelector('.right').innerHTML = `${marker.time} <br> Weather: ${marker.weather}`;
+        details.querySelector('.call-btn').href = `tel:${marker.phone}`;
+    }
+
+    // Add markers to the map
+    markers.forEach((marker) => {
+        const mapMarker = L.marker(marker.coords).addTo(map);
+        mapMarker.on('click', () => updateDetails(marker));
+    });
+
+    // Default details are set for the first marker
+    updateDetails(markers[0]);
+</script>
+    
+</body>
+</html>
