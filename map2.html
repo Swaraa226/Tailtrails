@@ -151,63 +151,71 @@
     <img src="/img/images (1).png" alt="Icon 5">
 </div>
 
-<script>
-    // Initialize the map
-    const map = L.map('map').setView([19.1197, 72.8467], 12); // Centered on Andheri West
+    <script>
+        // Initialize the map
+        const map = L.map('map').setView([19.1197, 72.8467], 12); // Centered on Andheri West
 
-    // Add OpenStreetMap tiles
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '© OpenStreetMap contributors'
-    }).addTo(map);
+        // Add OpenStreetMap tiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
 
-    // Marker data with new locations
-    const markers = [
-        {
-            coords: [19.1197, 72.8467], // Andheri West
-            name: "Peta India",
-            address: "Andheri West, Mumbai, Maharashtra",
-            time: "5 min (1 km)",
-            weather: "Sunny ☀️",
-            phone: "8617288849",
-        },
-        {
-            coords: [19.0176, 72.8471], // Helping Hands Animal Welfare Foundation
-            name: "Helping Hands Animal Welfare Foundation",
-            address: "Mumbai, Maharashtra",
-            time: "15 min (5 km)",
-            weather: "Cloudy ☁️",
-            phone: "9876543210",
-        },
-        {
-            coords: [19.2579, 72.8682], // Animal Matter To Me (AMTM)
-            name: "Animal Matter To Me (AMTM) - Animal Hospital",
-            address: "Malad West, Mumbai, Maharashtra",
-            time: "25 min (12 km)",
-            weather: "Sunny ☀️",
-            phone: "9123456789",
-        },
-    ];
+        // Define black icon for markers with increased size
+        const blackIcon = L.icon({
+            iconUrl: 'https://cdn-icons-png.flaticon.com/512/684/684908.png', // Black marker icon
+            iconSize: [90, 90], // Adjust size here (width, height)
+            iconAnchor: [25, 50], // Adjust anchor point
+            popupAnchor: [0, -50] // Popup position relative to marker
+        });
 
-    // Reference to the details section
-    const details = document.querySelector('.details');
+        // Marker data with new locations
+        const markers = [
+            {
+                coords: [19.1197, 72.8467], // Andheri West
+                name: "Peta India",
+                address: "Andheri West, Mumbai, Maharashtra",
+                time: "5 min (1 km)",
+                weather: "Sunny ☀️",
+                phone: "8617288849",
+            },
+            {
+                coords: [19.0176, 72.8471], // Helping Hands Animal Welfare Foundation
+                name: "Helping Hands Animal Welfare Foundation",
+                address: "Mumbai, Maharashtra",
+                time: "15 min (5 km)",
+                weather: "Cloudy ☁️",
+                phone: "9876543210",
+            },
+            {
+                coords: [19.2579, 72.8682], // Animal Matter To Me (AMTM)
+                name: "Animal Matter To Me (AMTM) - Animal Hospital",
+                address: "Malad West, Mumbai, Maharashtra",
+                time: "25 min (12 km)",
+                weather: "Sunny ☀️",
+                phone: "9123456789",
+            },
+        ];
 
-    // Function to update details section
-    function updateDetails(marker) {
-        details.querySelector('.left').innerHTML = `<strong>${marker.name}</strong><br>${marker.address}`;
-        details.querySelector('.right').innerHTML = `${marker.time} <br> Weather: ${marker.weather}`;
-        details.querySelector('.call-btn').href = `tel:${marker.phone}`;
-    }
+        // Reference to the details section
+        const details = document.querySelector('.details');
 
-    // Add markers to the map
-    markers.forEach((marker) => {
-        const mapMarker = L.marker(marker.coords).addTo(map);
-        mapMarker.on('click', () => updateDetails(marker));
-    });
+        // Function to update details section
+        function updateDetails(marker) {
+            details.querySelector('.left').innerHTML = `<strong>${marker.name}</strong><br>${marker.address}`;
+            details.querySelector('.right').innerHTML = `${marker.time} <br> Weather: ${marker.weather}`;
+            details.querySelector('.call-btn').href = `tel:${marker.phone}`;
+        }
 
-    // Default details are set for the first marker
-    updateDetails(markers[0]);
-</script>
+        // Add markers to the map
+        markers.forEach((marker) => {
+            const mapMarker = L.marker(marker.coords, { icon: blackIcon }).addTo(map);
+            mapMarker.on('click', () => updateDetails(marker));
+        });
+
+        // Default details are set for the first marker
+        updateDetails(markers[0]);
+    </script>
     
 </body>
 </html>
